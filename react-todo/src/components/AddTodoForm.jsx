@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function AddTodoForm({ addTodo }) {
+const AddTodoForm = ({ addTodo }) => {
     const [value, setValue] = useState('');
 
     const handleSubmit = (e) => {
@@ -22,6 +22,6 @@ function AddTodoForm({ addTodo }) {
             <button type="submit">Add Todo</button>
         </form>
     );
-}
+};
 
 export default AddTodoForm;

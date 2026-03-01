@@ -6,7 +6,7 @@ const initialTodos = [
     { id: 2, text: 'Build a project', completed: false },
 ];
 
-function TodoList() {
+const TodoList = () => {
     const [todos, setTodos] = useState(initialTodos);
 
     const addTodo = (text) => {
@@ -33,10 +33,7 @@ function TodoList() {
                     <li key={todo.id}>
                         <span
                             onClick={() => toggleTodo(todo.id)}
-                            style={{
-                                textDecoration: todo.completed ? 'line-through' : 'none',
-                                cursor: 'pointer'
-                            }}
+                            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
                         >
                             {todo.text}
                         </span>
@@ -46,6 +43,6 @@ function TodoList() {
             </ul>
         </div>
     );
-}
+};
 
 export default TodoList;
