@@ -1,4 +1,6 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
+import ProfileDetails from './ProfileDetails';
+import ProfileSettings from './ProfileSettings';
 
 const Profile = () => {
     return (
@@ -11,8 +13,10 @@ const Profile = () => {
                 </ul>
             </nav>
             <hr />
-            {/* The autograder might check for these component names: ProfileDetails, ProfileSettings */}
-            <Outlet />
+            <Routes>
+                <Route path="details" element={<ProfileDetails />} />
+                <Route path="settings" element={<ProfileSettings />} />
+            </Routes>
         </div>
     );
 };
