@@ -4,50 +4,42 @@ import '@testing-library/jest-dom';
 import TodoList from '../components/TodoList';
 
 describe('TodoList Component', () => {
-    test('renders TodoList component correctly', () => {
+    test('renders correctly and shows initial todos', () => {
         render(<TodoList />);
         expect(screen.getByText('Todo List')).toBeInTheDocument();
         expect(screen.getByText('Learn React')).toBeInTheDocument();
         expect(screen.getByText('Build a project')).toBeInTheDocument();
     });
 
-    test('adds a new todo', () => {
+    test('allows adding a new todo', () => {
         render(<TodoList />);
         const input = screen.getByPlaceholderText('Add a new todo');
-        const addButton = screen.getByText('Add Todo');
+        const addButton = screen.getByRole('button', { name: /Add Todo/i });
 
-        fireEvent.change(input, { target: { value: 'New Test Todo' } });
+        fireEvent.change(input, { target: { value: 'New Task' } });
         fireEvent.click(addButton);
 
-        expect(screen.getByText('New Test Todo')).toBeInTheDocument();
+        expect(screen.getByText('New Task')).toBeInTheDocument();
     });
 
-    test('toggles a todo completion status', () => {
+    test('allows toggling a todo', () => {
         render(<TodoList />);
-        const todoItem = screen.getByText('Learn React');
+        const todoText = screen.getByText('Learn React');
 
-        // Initial state: not completed (no line-through)
-        expect(todoItem).toHaveStyle('text-decoration: none');
+        fireEvent.click(todoText);
+        expect(todoText).toHaveStyle('text-decoration: line-through');
 
-        fireEvent.click(todoItem);
-
-        // After click: completed (line-through)
-        expect(todoItem).toHaveStyle('text-decoration: line-through');
-
-        fireEvent.click(todoItem);
-
-        // After toggle back: not completed
-        expect(todoItem).toHaveStyle('text-decoration: none');
+        fireEvent.click(todoText);
+        expect(todoText).toHaveStyle('text-decoration: none');
     });
 
-    test('deletes a todo', () => {
+    test('allows deleting a todo', () => {
         render(<TodoList />);
-        const todoItem = screen.getByText('Learn React');
-        const deleteButtons = screen.getAllByText('Delete');
+        const todoText = screen.getByText('Learn React');
+        // Delete button for 'Learn React' - since there are multiple 'Delete' buttons, we get the one next to the text
+        const deleteButton = screen.getAllByText('Delete')[0];
 
-        // Assuming the first delete button is for the first item
-        fireEvent.click(deleteButtons[0]);
-
-        expect(todoItem).not.toBeInTheDocument();
+        fireEvent.click(deleteButton);
+        expect(todoText).not.toBeInTheDocument();
     });
 });
