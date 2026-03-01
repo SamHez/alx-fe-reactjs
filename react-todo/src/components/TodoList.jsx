@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import AddTodoForm from './AddTodoForm';
 
-const TodoList = () => {
-    const [todos, setTodos] = useState([
-        { id: 1, text: 'Learn React', completed: false },
-        { id: 2, text: 'Build a project', completed: false },
-    ]);
+const initialTodos = [
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Build a project', completed: false },
+];
+
+function TodoList() {
+    const [todos, setTodos] = useState(initialTodos);
 
     const addTodo = (text) => {
-        setTodos([...todos, { id: Date.now(), text, completed: false }]);
+        const newTodo = { id: Date.now(), text, completed: false };
+        setTodos([...todos, newTodo]);
     };
 
     const toggleTodo = (id) => {
@@ -30,7 +33,10 @@ const TodoList = () => {
                     <li key={todo.id}>
                         <span
                             onClick={() => toggleTodo(todo.id)}
-                            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+                            style={{
+                                textDecoration: todo.completed ? 'line-through' : 'none',
+                                cursor: 'pointer'
+                            }}
                         >
                             {todo.text}
                         </span>
@@ -40,6 +46,6 @@ const TodoList = () => {
             </ul>
         </div>
     );
-};
+}
 
 export default TodoList;
